@@ -21,6 +21,7 @@ typedef double Matrix3x3[3][3];
 #define MISSING_DOUBLE	999999.999999
 #define MISSING_FLOAT	999999.999999f
 #define MISSING_CHAR	127
+#define NaN				-9999999999999.9999999999999
 
 #define Pi	M_PI
 
