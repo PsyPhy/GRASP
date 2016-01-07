@@ -13,6 +13,7 @@
 #include "VectorsMixin.h"
 
 const double VectorsMixin::pi = 3.14159265358979;
+const double VectorsMixin::epsilon = 0.0001;
 
 const Vector3 VectorsMixin::zeroVector = {0.0, 0.0, 0.0};
 const Vector3 VectorsMixin::iVector = { 1.0, 0.0, 0.0 };
@@ -373,6 +374,38 @@ void VectorsMixin::SetQuaternion( Quaternion result, double radians, const Vecto
 	// Compute the quaternion, making sure that the specified axis is a unit vector.
 	result[M] = (float) cos( 0.5 * radians );
 	ScaleVector( result, axis, sin( 0.5 * radians ) / VectorNorm( axis ) );
+
+}
+
+void VectorsMixin::SetRotationMatrix( Matrix3x3 result, double radians, Vector3 axis ) {
+
+	// This needs to be checked. Is the formula for row vectors or column vectors?
+	Vector3 n;
+	double c, s, v;
+
+	if ( fabs( radians ) < epsilon ) CopyMatrix( result, identityMatrix );
+	else {
+
+		CopyVector( n, axis );
+		NormalizeVector( n );
+
+		c = cos( radians );
+		s = sin( radians );
+		v = ( 1 - c );
+
+		result[X][X] = n[X] * n[X] * v + c;
+		result[X][Y] = n[Y] * n[X] * v - n[Z] * s;
+		result[X][Z] = n[Z] * n[X] * v + n[Y] * s;
+
+		result[Y][X] = n[X] * n[Y] * v + n[Z] * s;
+		result[Y][Y] = n[Y] * n[Y] * v + c;
+		result[Y][Z] = n[Z] * n[Y] * v - n[X] * s;
+
+		result[Z][X] = n[X] * n[Z] * v - n[Y] * s;
+		result[Z][Y] = n[Y] * n[Z] * v + n[X] * s;
+		result[Z][Z] = n[Z] * n[Z] * v + c;
+
+	}
 
 }
 

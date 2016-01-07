@@ -9,7 +9,7 @@
 // Vectors here are 3D. Quaternions are 4D.
 
 #pragma once
-using namespace System;
+// using namespace System;
 
 #include "../Useful/Useful.h" 
 
@@ -34,6 +34,7 @@ public:
 	static const Vector3 kVector;
 
 	static const double pi;
+	static const double epsilon;
 	double ToDegrees( double radians );
 	double ToRadians( double degrees );
 
@@ -89,6 +90,8 @@ public:
 	void SetQuaterniond( Quaternion result, double degrees, const Vector3 axis );
 	void NormalizeQuaternion( Quaternion q );
 	void MultiplyQuaternions( Quaternion result, const Quaternion q1, const Quaternion q2 );
+
+	void SetRotationMatrix( Matrix3x3 result, double radians, Vector3 axis );
 
 	void RotateVector( Vector3 result, const Quaternion q, const Vector3 v );
 	void MatrixToQuaternion( Quaternion result, Matrix3x3 m );
