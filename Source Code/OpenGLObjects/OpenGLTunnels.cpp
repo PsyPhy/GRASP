@@ -48,7 +48,7 @@ TunnelSegment::TunnelSegment( float length, float radius ) {
 }
 
 
-void __fastcall TunnelSegment::Draw( void )
+void TunnelSegment::Draw( void )
 {
     GLfloat x, y, z, new_z;
     GLfloat nX, nY;
@@ -114,7 +114,7 @@ void __fastcall TunnelSegment::Draw( void )
 // Junction's definition
 /////////////////////////
 
-void __fastcall TunnelJunction::Draw( void )
+void TunnelJunction::Draw( void )
 {
 
     GLfloat *T;

@@ -59,7 +59,7 @@ OpenGLWindow::OpenGLWindow( void ) {
 
 /********************************************************************************/
 
-bool __fastcall OpenGLWindow::Create( HWND parent, char *title, int x, int y, int w, int h )
+bool OpenGLWindow::Create( HWND parent, char *title, int x, int y, int w, int h )
 {
   
   int		PixelFormat;	// Holds The Results After Searching For A Match
@@ -251,13 +251,13 @@ bool __fastcall OpenGLWindow::Create( HWND parent, char *title, int x, int y, in
 
 /********************************************************************************/
 
-void __fastcall OpenGLWindow::SetPosition( int x, int y, int w, int h )  {
+void OpenGLWindow::SetPosition( int x, int y, int w, int h )  {
   SetWindowPos( hWnd, NULL, x, y, w, h, SWP_NOZORDER );
 }
 
 /********************************************************************************/
 
-void __fastcall OpenGLWindow::Activate( void )
+void OpenGLWindow::Activate( void )
 {
   if( !wglMakeCurrent(hDC,hRC) )					// Try To Activate The Rendering Context
   {
@@ -269,7 +269,7 @@ void __fastcall OpenGLWindow::Activate( void )
 
 /********************************************************************************/
 
-void __fastcall OpenGLWindow::Destroy( void )
+void OpenGLWindow::Destroy( void )
 {
   // Free memory
   // KillGLFont();
@@ -315,7 +315,7 @@ void __fastcall OpenGLWindow::Destroy( void )
 
 /********************************************************************************/
 
-void __fastcall OpenGLWindow::Clear( int c )
+void OpenGLWindow::Clear( int c )
 {
   glClearColor( OpenGLColors[c][0], OpenGLColors[c][1], OpenGLColors[c][2], 1.0f );
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
@@ -324,7 +324,7 @@ void __fastcall OpenGLWindow::Clear( int c )
 
 /********************************************************************************/
 
-void __fastcall OpenGLWindow::Clear( double r, double g, double b )
+void OpenGLWindow::Clear( double r, double g, double b )
 {
   glClearColor( (float) r, (float) g, (float) b, 1.0f );
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
@@ -333,7 +333,7 @@ void __fastcall OpenGLWindow::Clear( double r, double g, double b )
 
 /********************************************************************************/
 
-void __fastcall OpenGLWindow::Swap( void )
+void OpenGLWindow::Swap( void )
 {
   SwapBuffers( hDC );
 }
@@ -342,7 +342,7 @@ void __fastcall OpenGLWindow::Swap( void )
 
 #define MARGIN 50
 
-LRESULT __fastcall OpenGLWindow::WindowProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam ) {
+LRESULT OpenGLWindow::WindowProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam ) {
 
   static PAINTSTRUCT ps;
 
@@ -504,19 +504,19 @@ LRESULT __fastcall OpenGLWindow::WindowProc( HWND hWnd, UINT uMsg, WPARAM wParam
 }
 
 
-void __fastcall OpenGLWindow::SetKeyboardCallback( void (*callback)( int key ) )
+void OpenGLWindow::SetKeyboardCallback( void (*callback)( int key ) )
 {
   keyboard_callback = callback;
 }
 
-void __fastcall OpenGLWindow::SetEventCallback( bool (*callback)( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam ) )
+void OpenGLWindow::SetEventCallback( bool (*callback)( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam ) )
 {
   event_callback = callback;
 }
 
 /*********************************************************************************/
 
-bool __fastcall OpenGLWindow::RunOnce( void ) {
+bool OpenGLWindow::RunOnce( void ) {
   
   MSG msg;				/* message */
   
@@ -536,7 +536,7 @@ bool __fastcall OpenGLWindow::RunOnce( void ) {
 
 /*********************************************************************************/
 
-int __fastcall OpenGLWindow::GetInput( double timeout ) {
+int OpenGLWindow::GetInput( double timeout ) {
 
   int hold;
   Timer timer;
@@ -559,15 +559,15 @@ int __fastcall OpenGLWindow::GetInput( double timeout ) {
 
 }
 
-int __fastcall OpenGLWindow::MouseDeltaX( void ) {
+int OpenGLWindow::MouseDeltaX( void ) {
   return( mouseDeltaX );
 }
-int __fastcall OpenGLWindow::MouseDeltaY( void ) {
+int OpenGLWindow::MouseDeltaY( void ) {
   return( mouseDeltaY );
 }
 
 
-int __fastcall OpenGLWindow::Sleep( double seconds ) {
+int OpenGLWindow::Sleep( double seconds ) {
 
   Timer timer;
   TimerSet( &timer, seconds );

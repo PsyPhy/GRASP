@@ -61,26 +61,26 @@ public:
   bool (*event_callback)( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
 
   OpenGLWindow( void );
-  bool __fastcall Create( HWND parent, char *title, int x, int y, int w, int h );
-  void __fastcall SetPosition( int x, int y, int w, int h );
-  void __fastcall Destroy( void );
-  void __fastcall Activate( void );
-  bool __fastcall RunOnce( void );
-  void __fastcall Swap( void );
-  void __fastcall Clear( int color = WHITE );
-  void __fastcall Clear( double r, double g, double b );
-  void __fastcall SetKeyboardCallback( void (*callback)( int key ) );
-  void __fastcall SetEventCallback( bool (*callback)( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam ) );
+  bool Create( HWND parent, char *title, int x, int y, int w, int h );
+  void SetPosition( int x, int y, int w, int h );
+  void Destroy( void );
+  void Activate( void );
+  bool RunOnce( void );
+  void Swap( void );
+  void Clear( int color = WHITE );
+  void Clear( double r, double g, double b );
+  void SetKeyboardCallback( void (*callback)( int key ) );
+  void SetEventCallback( bool (*callback)( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam ) );
 
-  int __fastcall GetInput( double timeout = -1.0 );
-  int __fastcall Sleep( double seconds );
+  int GetInput( double timeout = -1.0 );
+  int Sleep( double seconds );
 
-  int __fastcall MouseDeltaX( void );
-  int __fastcall MouseDeltaY( void );
+  int MouseDeltaX( void );
+  int MouseDeltaY( void );
 
-	void __fastcall OpenGLWindow::printf(GLuint x, GLuint y, double scale, char* format, ...);
+	void OpenGLWindow::printf(GLuint x, GLuint y, double scale, char* format, ...);
 
-  LRESULT __fastcall WindowProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
+  LRESULT WindowProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
 
 };
 

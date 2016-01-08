@@ -54,39 +54,39 @@ public:
 
   OpenGLObject( void );
 
-  void __fastcall PrepDraw();
-  virtual void __fastcall Draw();
-  void __fastcall FinishDraw();
+  void  PrepDraw();
+  virtual void  Draw();
+  void  FinishDraw();
 
-  virtual void __fastcall SetPosition( const Vector3 p );
-  virtual void __fastcall SetPosition( double x, double y, double z );
-  void __fastcall GetPosition( Vector3 p );
+  virtual void  SetPosition( const Vector3 p );
+  virtual void  SetPosition( double x, double y, double z );
+  void  GetPosition( Vector3 p );
 
-  virtual void __fastcall SetOrientation( Matrix3x3 m );
-  virtual void __fastcall SetOrientation( double angle, const Vector3 axis );
-  virtual void __fastcall SetOrientation( double roll, double pitch, double yaw );
-  void __fastcall GetOrientation( Matrix3x3 m );
+  virtual void  SetOrientation( Matrix3x3 m );
+  virtual void  SetOrientation( double angle, const Vector3 axis );
+  virtual void  SetOrientation( double roll, double pitch, double yaw );
+  void  GetOrientation( Matrix3x3 m );
 
-  void __fastcall SetAttitude( Matrix3x3 m );
-  void __fastcall SetAttitude( double angle, const Vector3 axis );
-  void __fastcall SetAttitude( double roll, double pitch, double yaw );
-  void __fastcall GetAttitude( Matrix3x3 m );
+  void  SetAttitude( Matrix3x3 m );
+  void  SetAttitude( double angle, const Vector3 axis );
+  void  SetAttitude( double roll, double pitch, double yaw );
+  void  GetAttitude( Matrix3x3 m );
 
-  virtual void __fastcall SetOffset( const Vector3 p );
-  virtual void __fastcall SetOffset( double x, double y, double z );
-  void __fastcall GetOffset( Vector3 p );
+  virtual void  SetOffset( const Vector3 p );
+  virtual void  SetOffset( double x, double y, double z );
+  void  GetOffset( Vector3 p );
  
-  void __fastcall SetColor( GLfloat c[4] );
-  void __fastcall SetColor( float r, float g, float b, float a = 1.0 );
-  void __fastcall SetColor( int index );
+  void SetColor( GLfloat c[4] );
+  void SetColor( float r, float g, float b, float a = 1.0 );
+  void SetColor( int index );
 
-  void __fastcall SetTexture( Texture *texture );
-  void __fastcall SetTexture( Texture *texture, double repeat );
-  void __fastcall SetTexture( Texture *texture, double repeat_x, double repeat_y );
+  void  SetTexture( Texture *texture );
+  void  SetTexture( Texture *texture, double repeat );
+  void  SetTexture( Texture *texture, double repeat_x, double repeat_y );
 
-  void __fastcall Enable( void );
-  void __fastcall Disable( void );
-  bool __fastcall IsEnabled( void );
+  void  Enable( void );
+  void  Disable( void );
+  bool  IsEnabled( void );
 
 
   bool    enabled;
@@ -127,9 +127,9 @@ public:
 
   Assembly( void );
   ~Assembly( void );
-  void __fastcall AddComponent( OpenGLObject *c );
-  void __fastcall RemoveComponent( OpenGLObject *c );
-  virtual void __fastcall Draw();
+  void  AddComponent( OpenGLObject *c );
+  void  RemoveComponent( OpenGLObject *c );
+  virtual void Draw();
 
 };
 
@@ -154,7 +154,7 @@ public:
   double length;
 
   Box( double width = DEFAULT_WIDTH, double height = DEFAULT_WIDTH, double length = DEFAULT_WIDTH );
-  void __fastcall Draw();
+  void  Draw();
 
 };
 
@@ -173,7 +173,7 @@ public:
   double thickness;
 
   WindowFrame( double width = DEFAULT_WIDTH, double length = DEFAULT_WIDTH, double thickness = DEFAULT_THICKNESS );
-  void __fastcall Draw();
+  void  Draw();
 
 };
 
@@ -192,7 +192,7 @@ public:
   double thickness;
 
   Slab( double width = DEFAULT_WIDTH, double length = DEFAULT_WIDTH, double thickness = DEFAULT_THICKNESS );
-  void __fastcall Draw();
+  void Draw();
 
 };
 
@@ -210,7 +210,7 @@ public:
   double width;
 
   Patch( double width = DEFAULT_WIDTH, double length = DEFAULT_WIDTH );
-  void __fastcall Draw();
+  void  Draw();
 
 };
 
@@ -230,7 +230,7 @@ public:
   bool   capped;
 
   Bar( double length = DEFAULT_LENGTH, double width = DEFAULT_THICKNESS, double height = DEFAULT_THICKNESS, bool cap = false );
-  void __fastcall Draw();
+  void  Draw();
 
 };
 
@@ -249,7 +249,7 @@ public:
   int    vertices;
 
   Extrusion( double length, double vertex[][2], int n );
-  void __fastcall Draw();
+  void  Draw();
 
 };
 
@@ -270,7 +270,7 @@ public:
 
   Sphere( double radius = DEFAULT_RADIUS, int slices = DEFAULT_SLICES, int stacks = DEFAULT_STACKS );
 	void SetRadius( double radius );
-  void __fastcall Draw();
+  void  Draw();
 
 };
 
@@ -303,7 +303,7 @@ public:
   Ellipsoid( double xy_radius, double z_radius,
     int slices = DEFAULT_SLICES, int stacks = DEFAULT_STACKS );
 
-  void __fastcall Draw();
+  void  Draw();
 
 };
 //---------------------------------------------------------------------------
@@ -325,7 +325,7 @@ public:
   Disk( double outer_radius = DEFAULT_RADIUS, double inner_radius = 0.0, 
     int slices = DEFAULT_SLICES, int loops = DEFAULT_STACKS );
 
-  void __fastcall Draw();
+  void  Draw();
   void SetRadius( double outer_radius, double inner_radius = 0.0 );
 
 };
@@ -352,9 +352,9 @@ public:
               double height = DEFAULT_HEIGHT, 
               int slices = DEFAULT_SLICES, int stacks = DEFAULT_STACKS );
 
-  void __fastcall Draw();
-  void __fastcall SetRadius( double top_radius, double bottom_radius = NaN );
-  void __fastcall SetHeight( double height );
+  void  Draw();
+  void  SetRadius( double top_radius, double bottom_radius = NaN );
+  void  SetHeight( double height );
 
 };
 
@@ -364,8 +364,8 @@ class Frustrum : public OpenGLObject {
 
 private:
 
-  void __fastcall draw_polygons( void );
-  void __fastcall draw_end( void );
+  void  draw_polygons( void );
+  void  draw_end( void );
 
 protected:
 
@@ -378,7 +378,7 @@ public:
   
   Frustrum( double near_vertex[3], double far_vertex[3] );
 
-  void __fastcall Draw();
+  void  Draw();
 
 };
 
@@ -399,7 +399,7 @@ public:
   Circle( double radius = DEFAULT_RADIUS, 
     int slices = DEFAULT_SLICES, int loops = DEFAULT_STACKS );
 
-  void __fastcall Draw();
+  void  Draw();
 
 };
 
@@ -421,7 +421,7 @@ public:
   Hole( double radius = DEFAULT_RADIUS, double width = 1.0, double height = 1.0 );
   void SetRadius( double value );
 
-  void __fastcall Draw();
+  void  Draw();
 
 };
 
@@ -451,7 +451,7 @@ public:
   void SetTexture( int surface, Texture *texture );
   void SetTextures( int colors[6] );
 
-  void __fastcall Draw();
+  void  Draw();
 
 };
 

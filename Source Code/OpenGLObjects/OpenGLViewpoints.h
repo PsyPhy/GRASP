@@ -54,19 +54,19 @@ public:
   Viewpoint( double ipd = DEFAULT_IPD, double fov = DEFAULT_FOV, 
     double nearest = DEFAULT_NEAREST, double farthest = DEFAULT_FARTHEST );
 
-  void __fastcall Apply( OpenGLWindow *wnd, Eye eye = CYCLOPS );
+  void Apply( OpenGLWindow *wnd, Eye eye = CYCLOPS );
 
-  void __fastcall SetPosition( double p[3] );
-  void __fastcall SetPosition( double x, double y, double z );
-  void __fastcall SetOrientation( double m[3][3] );
-  void __fastcall SetOrientation( double angle, double axis[3] );
-  void __fastcall SetOrientation( double roll, double pitch, double yaw );
+  void SetPosition( double p[3] );
+  void SetPosition( double x, double y, double z );
+  void SetOrientation( double m[3][3] );
+  void SetOrientation( double angle, double axis[3] );
+  void SetOrientation( double roll, double pitch, double yaw );
 
-  void __fastcall SetOffset( double p[3] );
-  void __fastcall SetOffset( double x, double y, double z );
-  void __fastcall SetAttitude( double m[3][3] );
-  void __fastcall SetAttitude( double angle, double axis[3] );
-  void __fastcall SetAttitude( double roll, double pitch, double yaw );
+  void SetOffset( double p[3] );
+  void SetOffset( double x, double y, double z );
+  void SetAttitude( double m[3][3] );
+  void SetAttitude( double angle, double axis[3] );
+  void SetAttitude( double roll, double pitch, double yaw );
 
 };
 
@@ -93,7 +93,7 @@ public:
                   double min_depth = DEFAULT_NEAREST, 
                   double max_depth = DEFAULT_FARTHEST,
                   bool square = false );
-  void __fastcall Apply( OpenGLWindow *wnd, Eye eye = CYCLOPS );
+  void Apply( OpenGLWindow *wnd, Eye eye = CYCLOPS );
 
 };
 

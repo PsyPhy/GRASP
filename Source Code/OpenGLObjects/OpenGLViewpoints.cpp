@@ -189,7 +189,7 @@ void Viewpoint::SetAttitude( double roll, double pitch, double yaw ) {
 
 /********************************************************************************/
 
-void __fastcall Viewpoint::Apply( OpenGLWindow *wnd, Eye eye ) {
+void Viewpoint::Apply( OpenGLWindow *wnd, Eye eye ) {
 
   double aspect;
 
@@ -256,7 +256,7 @@ OrthoViewpoint::OrthoViewpoint( double min_x, double max_x,
   OpenGLObject();   // Do what every OpenGLObject does at creation.
 }
 
-void __fastcall OrthoViewpoint::Apply( OpenGLWindow *wnd, Eye eye ) {
+void OrthoViewpoint::Apply( OpenGLWindow *wnd, Eye eye ) {
 
 
   glViewport(0, 0, wnd->width, wnd->height );

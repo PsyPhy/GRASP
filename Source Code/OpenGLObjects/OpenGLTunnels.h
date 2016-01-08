@@ -42,7 +42,7 @@ public:
   float length;
   float radius;
 
-  void __fastcall Draw();
+  void Draw();
   TunnelSegment( float length = 100.0, float radius = 25.0 );
 
 };
@@ -57,7 +57,7 @@ protected:
 
 public:
 
-  void __fastcall Draw();
+  void Draw();
 
 };
 
