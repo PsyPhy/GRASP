@@ -26,7 +26,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -91,6 +91,17 @@
     <Library Include="..\Lib\GLU32.LIB" />
     <Library Include="..\Lib\glut32.lib" />
     <Library Include="..\Lib\OPENGL32.LIB" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OpenGLObjects\OpenGLObjects.vcxproj">
+      <Project>{8aff76e8-b71a-4241-8142-ed248f243a5a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Useful\Useful.vcxproj">
+      <Project>{9dcdabb9-8979-4ef4-9d74-10ed8c1d7a56}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\VectorsMixin\VectorsMixin.vcxproj">
+      <Project>{6565a1ce-b49e-4e86-a49e-c5080df46b31}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
