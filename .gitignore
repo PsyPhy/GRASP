@@ -1,3 +1,7 @@
+*/Debug/*
+*/*/Debug/*
+*/Release/*
+*/*/Release/*
 
 *.tlog
 
@@ -20,6 +24,11 @@
 *.lib
 
 app.res
+
 *.sbr
 
 *.bsc
+
+*.ilk
+
+*.manifest
