@@ -58,21 +58,21 @@ public:
   virtual void __fastcall Draw();
   void __fastcall FinishDraw();
 
-  virtual void __fastcall SetPosition( Vector3 p );
+  virtual void __fastcall SetPosition( const Vector3 p );
   virtual void __fastcall SetPosition( double x, double y, double z );
   void __fastcall GetPosition( Vector3 p );
 
   virtual void __fastcall SetOrientation( Matrix3x3 m );
-  virtual void __fastcall SetOrientation( double angle, Vector3 axis );
+  virtual void __fastcall SetOrientation( double angle, const Vector3 axis );
   virtual void __fastcall SetOrientation( double roll, double pitch, double yaw );
   void __fastcall GetOrientation( Matrix3x3 m );
 
   void __fastcall SetAttitude( Matrix3x3 m );
-  void __fastcall SetAttitude( double angle, Vector3 axis );
+  void __fastcall SetAttitude( double angle, const Vector3 axis );
   void __fastcall SetAttitude( double roll, double pitch, double yaw );
   void __fastcall GetAttitude( Matrix3x3 m );
 
-  virtual void __fastcall SetOffset( Vector3 p );
+  virtual void __fastcall SetOffset( const Vector3 p );
   virtual void __fastcall SetOffset( double x, double y, double z );
   void __fastcall GetOffset( Vector3 p );
  

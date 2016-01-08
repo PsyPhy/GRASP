@@ -76,7 +76,7 @@ OpenGLObject::OpenGLObject( void ) {
  * Set the position of an object either from a 3D vector or from 3 scalar values.
  */
 
-void OpenGLObject::SetPosition( Vector3 p ) {
+void OpenGLObject::SetPosition( const Vector3 p ) {
   CopyVector( position, p );
   CopyVector( gl_position, position );
 }
@@ -96,7 +96,7 @@ void OpenGLObject::GetPosition( Vector3 p ) {
  * Offset the object from its control position.
  */
 
-void OpenGLObject::SetOffset( Vector3 p ) {
+void OpenGLObject::SetOffset( const Vector3 p ) {
   CopyVector( offset, p );
   CopyVector( gl_offset, offset );
 }
@@ -134,7 +134,7 @@ void OpenGLObject::SetOrientation( Matrix3x3 m ) {
 	gl_orientation[ i * 4 + j ] = 1.0;
 }
 
-void OpenGLObject::SetOrientation( double angle, Vector3 axis ) {
+void OpenGLObject::SetOrientation( double angle, const Vector3 axis ) {
 
   Matrix3x3 m;
 
@@ -190,7 +190,7 @@ void OpenGLObject::SetAttitude( Matrix3x3 m ) {
   gl_attitude[ i * 4 + j ] = 1.0;
 }
 
-void OpenGLObject::SetAttitude( double angle, Vector3 axis ) {
+void OpenGLObject::SetAttitude( double angle, const Vector3 axis ) {
 
   Matrix3x3 m;
 

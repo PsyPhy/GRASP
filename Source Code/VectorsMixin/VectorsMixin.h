@@ -91,7 +91,7 @@ public:
 	void NormalizeQuaternion( Quaternion q );
 	void MultiplyQuaternions( Quaternion result, const Quaternion q1, const Quaternion q2 );
 
-	void SetRotationMatrix( Matrix3x3 result, double radians, Vector3 axis );
+	void SetRotationMatrix( Matrix3x3 result, double radians, const Vector3 axis );
 
 	void RotateVector( Vector3 result, const Quaternion q, const Vector3 v );
 	void MatrixToQuaternion( Quaternion result, Matrix3x3 m );

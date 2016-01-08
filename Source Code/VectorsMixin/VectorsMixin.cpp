@@ -377,7 +377,7 @@ void VectorsMixin::SetQuaternion( Quaternion result, double radians, const Vecto
 
 }
 
-void VectorsMixin::SetRotationMatrix( Matrix3x3 result, double radians, Vector3 axis ) {
+void VectorsMixin::SetRotationMatrix( Matrix3x3 result, double radians, const Vector3 axis ) {
 
 	// This needs to be checked. Is the formula for row vectors or column vectors?
 	Vector3 n;
