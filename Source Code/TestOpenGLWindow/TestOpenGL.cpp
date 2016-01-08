@@ -1,22 +1,11 @@
+// TestOpenGL.cpp : Defines the entry point for the console application.
+// This program appears to test how to open an OpenGL window and draw into it.
 
-#include <math.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <time.h>
-
-#include <windows.h>
-#include <mmsystem.h>
-
+#include "stdafx.h"
 #include <gl/gl.h>
 
-typedef int bool;
-#define true 1
-#define false 0
-
-#if 1
-
-static const char *s_class_name  = "GL Sphere";
-static const char *s_window_name = "GL Sphere";
+static const char *s_class_name  = "TestOpenGL";
+static const char *s_window_name = "TestOpenGL";
 
 static BOOL    s_rgba        = TRUE;
 static BOOL    s_lighting    = FALSE;
@@ -31,16 +20,18 @@ static HGLRC    s_hglrc = NULL;
 static HDC      s_hDC   = NULL;
 static int      s_bpp   = 8;
 
-static int		s_winwidth = 256;
-static int		s_winheight = 256;
+static int		s_winwidth = 1024;
+static int		s_winheight = 768;
+static int		s_winx = 10;
+static int		s_winy = 0;
 
 static GLint s_lit_tex_indexes[3];
 /* struct used to manage color ramps */
 struct colorIndexState {
-    GLfloat amb[3];	/* ambient color / bottom of ramp */
+    GLfloat amb[3];		/* ambient color / bottom of ramp */
     GLfloat diff[3];	/* diffuse color / middle of ramp */
     GLfloat spec[3];	/* specular color / top of ramp */
-    GLfloat ratio;	/* ratio of diffuse to specular in ramp */
+    GLfloat ratio;		/* ratio of diffuse to specular in ramp */
     GLint indexes[3];	/* where ramp was placed in palette */
 };
 
@@ -90,24 +81,21 @@ static BOOL SetupPixelFormat( HDC hDC )
       0,
       0,
       0, 0, 0, 0,
-      16,                 // 16-bit depth buffer
-      0,                  // no stencil buffer
-      0,                  // no aux buffers
-      PFD_MAIN_PLANE,			/* main layer */
+      16,				// 16-bit depth buffer
+      0,				// no stencil buffer
+      0,				// no aux buffers
+      PFD_MAIN_PLANE,	// main layer */
       0,	
       0, 0, 0
    };
    int  selected_pf;
    
-   if ( ( selected_pf = ChoosePixelFormat( hDC, &pfd ) ) == 0 )
-   {
-      MessageBox( 0, "Failed to find acceptable pixel format", "GL Sphere Error", MB_ICONERROR | MB_OK );
+   if ( ( selected_pf = ChoosePixelFormat( hDC, &pfd ) ) == 0 ) {
+      MessageBox( 0, "Failed to find acceptable pixel format", "TestOpenGL Error", MB_ICONERROR | MB_OK );
       return FALSE;
    }
-   
-   if ( !SetPixelFormat( hDC, selected_pf, &pfd) )
-   {
-      MessageBox( 0, "Failed to SetPixelFormat", "GL Sphere Error", MB_ICONERROR | MB_OK );
+   if ( !SetPixelFormat( hDC, selected_pf, &pfd) ) {
+      MessageBox( 0, "Failed to SetPixelFormat", "TestOpenGL Error", MB_ICONERROR | MB_OK );
       return FALSE;
    }
    return TRUE;
@@ -231,7 +219,8 @@ static void SetDefaults( void )
 {
    // setup a default color
    glColor3f( 1.0F, 1.0F, 1.0F );
-   glClearColor( 0.0F, 0.0F, 1.0F, 1.0F );
+   // Define the background color
+   glClearColor( 0.0F, 0.0F, 0.5F, 1.0F );
 
 #if 0
    glClearDepth( 1.0F );
@@ -254,8 +243,7 @@ static void SetDefaults( void )
    glShadeModel( GL_SMOOTH );
 
    // setup lighting
-   if ( !s_lighting )
-   {
+   if ( !s_lighting ) {
       glDisable( GL_LIGHTING );
       glDisable( GL_LIGHT0 );
    }
@@ -280,17 +268,13 @@ static void SetDefaults( void )
    glEnable( GL_CULL_FACE );
 
 #ifdef GL_SGI_cull_vertex
-   if ( s_vcull )
-   {
+   if ( s_vcull ) {
        GLfloat eyeDir[] = { 0.0F, 0.0F, 1.0F, 0.0F };
-
        glEnable(GL_CULL_VERTEX_SGI);
-
        if ( CullParameterfvSGI )
            CullParameterfvSGI( GL_CULL_VERTEX_EYE_POSITION_SGI, eyeDir );
    }
-   else
-   {
+   else {
        glDisable(GL_CULL_VERTEX_SGI);
    }
 #endif
@@ -298,8 +282,6 @@ static void SetDefaults( void )
    // setup dither
    glEnable( GL_DITHER );
 
-   glClear( GL_COLOR_BUFFER_BIT );
-   SwapBuffers( s_hDC );
 }
 
 /*********************************************************************************/
@@ -329,7 +311,6 @@ static LRESULT APIENTRY WndProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPar
        {
            int winWidth  = ( int ) LOWORD( lParam );
            int winHeight = ( int ) HIWORD( lParam );
-
            glViewport( 0, 0, winWidth, winHeight );
        }
        return 0;
@@ -372,7 +353,7 @@ BOOL InitWindow( void ) {
    wc.hInstance   = NULL;
    wc.hIcon       = LoadIcon(NULL, IDI_APPLICATION);
    wc.hCursor     = LoadCursor(NULL, IDC_ARROW);
-   wc.hbrBackground = GetStockObject(WHITE_BRUSH);
+   wc.hbrBackground = (HBRUSH) GetStockObject(WHITE_BRUSH);
    wc.lpszMenuName = NULL;
    wc.lpszClassName = s_class_name;
    
@@ -380,10 +361,8 @@ BOOL InitWindow( void ) {
    
    {
       HDC hdc = GetDC( 0 );
-      
       s_bpp = GetDeviceCaps( hdc, BITSPIXEL );
       s_rgba = 1;
-      
       ReleaseDC( 0, hdc );
    }
 
@@ -394,7 +373,7 @@ BOOL InitWindow( void ) {
    s_hWnd = CreateWindow( s_class_name,
                           s_window_name, 
                           WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN | WS_CLIPSIBLINGS,
-                          500, 10, 
+                          s_winx, s_winy, 
                           s_winwidth, s_winheight,
                           NULL,
                           NULL,
@@ -404,10 +383,6 @@ BOOL InitWindow( void ) {
 
    if ( s_hWnd != NULL ) return TRUE;
    return FALSE;
-
-	// setup a default color
-   glColor3f( 1.0F, 1.0F, 1.0F );
-   glClearColor( 1.0F, 0.0F, 1.0F, 1.0F );
 
 #if 0
    glClearDepth( 1.0F );
@@ -459,10 +434,8 @@ BOOL InitWindow( void ) {
 bool StartWindow( void ) {
 
 	if ( InitWindow() ) {
-
 		ShowWindow( s_hWnd, 1 );
 		return( true );
-
 	}
 	else return( false );
 
@@ -488,18 +461,11 @@ void Swap ( void ) {
    SwapBuffers( s_hDC );
 }
 
-#else
-
-extern bool StartWindow ( void );
-extern void ShutdownWindow( void );
-extern void Swap( void );
-
-#endif
 
 /*********************************************************************************/
 
-void main( int argc, char *argv[] ) {
-
+int _tmain(int argc, _TCHAR* argv[])
+{
 	if ( StartWindow() ) {
 
 		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
@@ -520,5 +486,5 @@ void main( int argc, char *argv[] ) {
 	Sleep(5000);
 	ShutdownWindow();
 
-}
+  return( 0 );}
 

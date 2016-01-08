@@ -62,33 +62,33 @@ OpenGLWindow::OpenGLWindow( void ) {
 bool __fastcall OpenGLWindow::Create( HWND parent, char *title, int x, int y, int w, int h )
 {
   
-  int		    PixelFormat;			// Holds The Results After Searching For A Match
-  WNDCLASS	wc;						    // Windows Class Structure
-  RECT		  WindowRect;				// Grabs Rectangle Upper Left / Lower Right Values
+  int		PixelFormat;	// Holds The Results After Searching For A Match
+  WNDCLASS	wc;				// Windows Class Structure
+  RECT		WindowRect;		// Grabs Rectangle Upper Left / Lower Right Values
 
   hParent = parent;
+
+  if ( FullScreen ) x = y = 0;
 
   WindowRect.left = (long) x;       // Set Left Value To x
   WindowRect.right = (long) x + w;  // Set Right Value To Achieve Requested Width
   WindowRect.top = (long) y;        // Set Top Value To y
   WindowRect.bottom = (long) y + h; // Set Bottom Value To Acheive Requested Height
   
-  if(FullScreen) x = y = 0;
-  
-  hInstance			  = GetModuleHandle(NULL);				      // Grab An Instance For Our Window
-  wc.style			  = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;	// Redraw On Size, And Own DC For Window.
-  wc.lpfnWndProc	= (WNDPROC) GenericWindowProc;   		  // WndProc Handles Messages
-  wc.cbClsExtra		= 0;									                // No Extra Window Data
-  wc.cbWndExtra		= 0;									                // No Extra Window Data
-  wc.hInstance		= hInstance;							            // Set The Instance
-  wc.hIcon			  = LoadIcon(NULL, IDI_WINLOGO);			  // Load The Default Icon
-  wc.hCursor			= LoadCursor(NULL, IDC_ARROW);			  // Load The Arrow Pointer
-  wc.hbrBackground	= NULL;									            // No Background Required For GL
-  wc.lpszMenuName		= NULL;									            // We Don't Want A Menu
-  wc.lpszClassName	= "OpenGL";								          // Set The Class Name
+  hInstance			  = GetModuleHandle(NULL);					// Grab An Instance For Our Window
+  wc.style			  = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;		// Redraw On Size, And Own DC For Window.
+  wc.lpfnWndProc	= (WNDPROC) GenericWindowProc;				// WndProc Handles Messages
+  wc.cbClsExtra		= 0;										// No Extra Window Data
+  wc.cbWndExtra		= 0;										// No Extra Window Data
+  wc.hInstance		= hInstance;								// Set The Instance
+  wc.hIcon			= LoadIcon(NULL, IDI_WINLOGO);				// Load The Default Icon
+  wc.hCursor		= LoadCursor(NULL, IDC_ARROW);				// Load The Arrow Pointer
+  wc.hbrBackground	= NULL;										// No Background Required For GL
+  wc.lpszMenuName		= NULL;									// We Don't Want A Menu
+  wc.lpszClassName	= "OpenGL";									// Set The Class Name
   
   if ( !already_registered ) {
-    if ( !RegisterClass(&wc) )									          // Attempt To Register The Window Class
+    if ( !RegisterClass(&wc) )									// Attempt To Register The Window Class
     {
 //      MessageBox(NULL,"Failed To Register The Window Class.","ERROR",MB_OK|MB_ICONEXCLAMATION);
 //      return false;											// Return false
@@ -96,20 +96,19 @@ bool __fastcall OpenGLWindow::Create( HWND parent, char *title, int x, int y, in
 //    already_registered = true;
   }
   
-  if ( FullScreen )												                  // Attempt Fullscreen Mode?
+  if ( FullScreen )												// Attempt Fullscreen Mode?
   {
-    DEVMODE dmScreenSettings;								              // Device Mode
-    memset(&dmScreenSettings,0,sizeof(dmScreenSettings));	// Makes Sure Memory's Cleared
-    dmScreenSettings.dmSize=sizeof(dmScreenSettings);		  // Size Of The Devmode Structure
-    dmScreenSettings.dmPelsWidth = w;	    			          // Selected Screen Width
+    DEVMODE dmScreenSettings;									// Device Mode
+    memset(&dmScreenSettings,0,sizeof(dmScreenSettings));		// Makes Sure Memory's Cleared
+    dmScreenSettings.dmSize=sizeof(dmScreenSettings);			// Size Of The Devmode Structure
+    dmScreenSettings.dmPelsWidth = w;							// Selected Screen Width
     dmScreenSettings.dmPelsHeight = h;	    			        // Selected Screen Height
     dmScreenSettings.dmBitsPerPel = Colordepth; 			    // Selected Bits Per Pixel
     dmScreenSettings.dmDisplayFrequency = DisplayFrequency;
     dmScreenSettings.dmFields=DM_BITSPERPEL|DM_PELSWIDTH|DM_PELSHEIGHT|DM_DISPLAYFREQUENCY;
     
     // Try To Set Selected Mode And Get Results.  NOTE: CDS_FULLSCREEN Gets Rid Of Start Bar.
-    if (ChangeDisplaySettings(&dmScreenSettings,CDS_FULLSCREEN)!=DISP_CHANGE_SUCCESSFUL)
-    {
+    if ( ChangeDisplaySettings( &dmScreenSettings, CDS_FULLSCREEN ) != DISP_CHANGE_SUCCESSFUL) {
       // If The Mode Fails, Offer Two Options.  Quit Or Use Windowed Mode.
       if (MessageBox(NULL,"The Requested Fullscreen Mode Is Not Supported By\nYour Video Card. Use Windowed Mode Instead?","NeHe GL",MB_YESNO|MB_ICONEXCLAMATION)==IDYES)
       {
@@ -119,55 +118,51 @@ bool __fastcall OpenGLWindow::Create( HWND parent, char *title, int x, int y, in
       {
         // Pop Up A Message Box Letting User Know The Program Is Closing.
         MessageBox( NULL, "Program Will Now Close.", "ERROR", MB_OK | MB_ICONSTOP );
-        return false;									// Return false
+        return false;									
       }
     }
   }
   
-  if ( FullScreen )												// Are We Still In Fullscreen Mode?
+  if ( FullScreen )					// Are We Still In Fullscreen Mode?
   {
-    dwExStyle=WS_EX_APPWINDOW;					// Window Extended Style
-    dwStyle=WS_POPUP;										// Windows Style
-    ShowCursor(false);									// Hide Mouse Pointer
+    dwExStyle=WS_EX_APPWINDOW;		// Window Extended Style
+    dwStyle=WS_POPUP;				// Windows Style
+    ShowCursor(false);				// Hide Mouse Pointer
   }
-
   else if ( !Border ) {
-    dwExStyle=WS_EX_APPWINDOW;					// Window Extended Style
-    dwStyle=			                      // Windows Style
-    ( parent ? WS_CHILD : WS_POPUP );					// Windows Style
-//    ShowCursor(false);									// Hide Mouse Pointer
+    dwExStyle = WS_EX_APPWINDOW;					// Window Extended Style
+    dwStyle = ( parent ? WS_CHILD : WS_POPUP );		// Windows Style
+    ShowCursor(false);								// Hide Mouse Pointer
   }
 
   else 
   {
-    dwExStyle = 
-      WS_EX_APPWINDOW;			                                        // Window Extended Style
-		dwStyle   = 
-      WS_OVERLAPPEDWINDOW | ( parent ? WS_CHILD : 0 );							// Windows Style
+    dwExStyle = WS_EX_APPWINDOW;									// Window Extended Style
+	dwStyle   = WS_OVERLAPPEDWINDOW | ( parent ? WS_CHILD : 0 );	// Windows Style
   }
   
   AdjustWindowRectEx( &WindowRect, dwStyle, false, dwExStyle );		// Adjust Window To True Requested Size
-  width = WindowRect.right-WindowRect.left;   // Calculate Window Width
-  height = WindowRect.bottom-WindowRect.top;	// Calculate Window Height  
+  width = WindowRect.right-WindowRect.left;							// Calculate Window Width
+  height = WindowRect.bottom-WindowRect.top;						// Calculate Window Height  
 
   // Create The Window
-  if (!(hWnd=CreateWindowEx( 	dwExStyle,							// Extended Style For The Window
-    "OpenGL",							// Class Name
-    title,								// Window Title
-    dwStyle |							// Defined Window Style
-    WS_CLIPSIBLINGS |     // Required Window Style
-    WS_CLIPCHILDREN,			// Required Window Style
-    x, y,                 // Window Position
+  if (!(hWnd=CreateWindowEx( 	dwExStyle,	// Extended Style For The Window
+    "OpenGL",								// Class Name
+    title,									// Window Title
+    dwStyle |								// Defined Window Style
+    WS_CLIPSIBLINGS |						// Required Window Style
+    WS_CLIPCHILDREN,						// Required Window Style
+    x, y,									// Window Position
     width,	
     height,
-    parent,								// Parent Window
-    NULL,								  // No Menu
-    hInstance,					  // Instance
-    NULL )))							// Dont Pass Anything To WM_CREATE
+    parent,									// Parent Window
+    NULL,									// No Menu
+    hInstance,								// Instance
+    NULL )))								// Dont Pass Anything To WM_CREATE
   {
-    Destroy();								// Reset The Display
-    MessageBox(NULL,"Window Creation Error.","ERROR",MB_OK|MB_ICONEXCLAMATION);
-    return false;								// Return false
+    Destroy();								// If CreateWindowEx() failed, reset the display.
+    MessageBox( NULL, "Window Creation Error.", "ERROR", MB_OK | MB_ICONEXCLAMATION );
+    return false;							// Abort.
   }
 
   // Store a pointer to the OpenGLWindow instance for use by the callback routines.
@@ -177,45 +172,45 @@ bool __fastcall OpenGLWindow::Create( HWND parent, char *title, int x, int y, in
   if ( DoubleBuffer ) flag |= PFD_DOUBLEBUFFER;
   if ( Stereo ) flag |= PFD_STEREO;
   
-  static	PIXELFORMATDESCRIPTOR pfd =				// pfd Tells Windows How We Want Things To Be
+  static	PIXELFORMATDESCRIPTOR pfd =		// pfd Tells Windows How We Want Things To Be
   {
-    sizeof(PIXELFORMATDESCRIPTOR),				// Size Of This Pixel Format Descriptor
-      1,											// Version Number
-      flag,           				// Must Support Double Buffering
-      PFD_TYPE_RGBA,					// Request An RGBA Format
+    sizeof(PIXELFORMATDESCRIPTOR),			// Size Of This Pixel Format Descriptor
+      1,									// Version Number
+      flag,									// Must Support Double Buffering
+      PFD_TYPE_RGBA,						// Request An RGBA Format
       Colordepth,							// Select Our Color Depth
-      0, 0, 0, 0, 0, 0,				// Color Bits Ignored
-      1,											// YES Alpha Buffer
-      0,											// Shift Bit Ignored
-      0,											// No Accumulation Buffer
+      0, 0, 0, 0, 0, 0,						// Color Bits Ignored
+      1,									// YES Alpha Buffer
+      0,									// Shift Bit Ignored
+      0,									// No Accumulation Buffer
       0, 0, 0, 0,							// Accumulation Bits Ignored
-      16,											// 16Bit Z-Buffer (Depth Buffer)
-      0,											// No Stencil Buffer
-      0,											// No Auxiliary Buffer
-      PFD_MAIN_PLANE,					// Main Drawing Layer
-      0,											// Reserved
-      0, 0, 0									// Layer Masks Ignored
+      16,									// 16Bit Z-Buffer (Depth Buffer)
+      0,									// No Stencil Buffer
+      0,									// No Auxiliary Buffer
+      PFD_MAIN_PLANE,						// Main Drawing Layer
+      0,									// Reserved
+      0, 0, 0								// Layer Masks Ignored
   };
   
-  if ( !( hDC = GetDC(hWnd) ) )							// Did We Get A Device Context?
+  if ( !( hDC = GetDC(hWnd) ) )				// Did We Get A Device Context?
   {
-    Destroy();								// Reset The Display
+    Destroy();								// If not, reset the display.
     MessageBox(NULL,"Can't Create A GL Device Context.","ERROR",MB_OK|MB_ICONEXCLAMATION);
-    return false;								// Return false
+    return false;							// Abort.
   }
   
   if (!(PixelFormat = ChoosePixelFormat( hDC,&pfd )))	// Did Windows Find A Matching Pixel Format?
   {
-    Destroy();								// Reset The Display
+    Destroy();											// If not, reset the display.
     MessageBox(NULL,"Can't Find A Suitable PixelFormat.","ERROR",MB_OK|MB_ICONEXCLAMATION);
-    return false;								      // Return false
+    return false;										// Abort.
   }
   
   if( !SetPixelFormat( hDC, PixelFormat, &pfd) )		// Are We Able To Set The Pixel Format?
   {
-    Destroy();								// Reset The Display
+    Destroy();											// Reset The Display
     MessageBox(NULL,"Can't Set The PixelFormat.","ERROR",MB_OK|MB_ICONEXCLAMATION);
-    return false;							        // Return false
+    return false;										// Return false
   }
   
   if ( !( hRC=wglCreateContext(hDC) ) )		// Are We Able To Get A Rendering Context?
@@ -234,14 +229,14 @@ bool __fastcall OpenGLWindow::Create( HWND parent, char *title, int x, int y, in
   
   ShowWindow(hWnd,SW_SHOW);						// Show The Window
   SetForegroundWindow(hWnd);					// Slightly Higher Priority
-  SetFocus(hWnd);									    // Sets Keyboard Focus To The Window
+  SetFocus(hWnd);								// Sets Keyboard Focus To The Window
   
   Clear( BLACK );
 
-  glEnable(GL_TEXTURE_2D);							// Enable Texture Mapping ( NEW )
+  glEnable(GL_TEXTURE_2D);								// Enable Texture Mapping ( NEW )
 	glShadeModel(GL_SMOOTH);							// Enable Smooth Shading
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);	// Black Background
-	glClearDepth(1.0f);									  // Depth Buffer Setup
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);				// Black Background
+	glClearDepth(1.0f);									// Depth Buffer Setup
 	glEnable(GL_DEPTH_TEST);							// Enables Depth Testing
 	glDepthFunc(GL_LEQUAL);								// The Type Of Depth Testing To Do
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);	// Really Nice Perspective Calculations
@@ -257,19 +252,16 @@ bool __fastcall OpenGLWindow::Create( HWND parent, char *title, int x, int y, in
 /********************************************************************************/
 
 void __fastcall OpenGLWindow::SetPosition( int x, int y, int w, int h )  {
-
   SetWindowPos( hWnd, NULL, x, y, w, h, SWP_NOZORDER );
-
 }
 
 /********************************************************************************/
 
 void __fastcall OpenGLWindow::Activate( void )
 {
-
   if( !wglMakeCurrent(hDC,hRC) )					// Try To Activate The Rendering Context
   {
-    Destroy();								            // Reset The Display
+    Destroy();								        // Reset The Display
     MessageBox(NULL,"Can't Activate The GL Rendering Context.","ERROR",MB_OK|MB_ICONEXCLAMATION);
   }
 
@@ -343,9 +335,7 @@ void __fastcall OpenGLWindow::Clear( double r, double g, double b )
 
 void __fastcall OpenGLWindow::Swap( void )
 {
-
   SwapBuffers( hDC );
-
 }
 
 /********************************************************************************/
@@ -364,8 +354,8 @@ LRESULT __fastcall OpenGLWindow::WindowProc( HWND hWnd, UINT uMsg, WPARAM wParam
   int mouse_x, mouse_y;
   
 
-  // Allow one to substitute a function for the even handler.
-  // A better way is to create a new class of OpenGLWindow with its specific
+  // Allow one to substitute a function for the event handler.
+  // A better way would be to to create a new class of OpenGLWindow with its specific
   // event handling procedure.
   if ( event_callback ) {
     return( (*event_callback)( hWnd, uMsg, wParam, lParam ) );
@@ -393,14 +383,12 @@ LRESULT __fastcall OpenGLWindow::WindowProc( HWND hWnd, UINT uMsg, WPARAM wParam
         break;
         
       case WM_PAINT:
-        
         BeginPaint(hWnd, &ps);
         EndPaint(hWnd, &ps);
         return 0;
         break;
         
       case WM_SIZE:
-        
         // Update the size in the OpenGLWindow structure as well.
         width = LOWORD(lParam);
         height = HIWORD(lParam);

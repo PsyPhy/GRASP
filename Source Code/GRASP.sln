@@ -7,6 +7,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VectorsMixin", "VectorsMixi
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenGLObjects", "OpenGLObjects\OpenGLObjects.vcxproj", "{8AFF76E8-B71A-4241-8142-ED248F243A5A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestOpenGLWindow", "TestOpenGLWindow\TestOpenGL.vcxproj", "{1E440AE3-5AAC-4A68-B0E2-37F4CB2BBA4A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestOpenGLObjects", "TestOpenGLObjects\TestOpenGLObjects.vcxproj", "{4D956433-930D-4331-A512-93C7BD865CE5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -25,6 +29,14 @@ Global
 		{8AFF76E8-B71A-4241-8142-ED248F243A5A}.Debug|Win32.Build.0 = Debug|Win32
 		{8AFF76E8-B71A-4241-8142-ED248F243A5A}.Release|Win32.ActiveCfg = Release|Win32
 		{8AFF76E8-B71A-4241-8142-ED248F243A5A}.Release|Win32.Build.0 = Release|Win32
+		{1E440AE3-5AAC-4A68-B0E2-37F4CB2BBA4A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1E440AE3-5AAC-4A68-B0E2-37F4CB2BBA4A}.Debug|Win32.Build.0 = Debug|Win32
+		{1E440AE3-5AAC-4A68-B0E2-37F4CB2BBA4A}.Release|Win32.ActiveCfg = Release|Win32
+		{1E440AE3-5AAC-4A68-B0E2-37F4CB2BBA4A}.Release|Win32.Build.0 = Release|Win32
+		{4D956433-930D-4331-A512-93C7BD865CE5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4D956433-930D-4331-A512-93C7BD865CE5}.Debug|Win32.Build.0 = Debug|Win32
+		{4D956433-930D-4331-A512-93C7BD865CE5}.Release|Win32.ActiveCfg = Release|Win32
+		{4D956433-930D-4331-A512-93C7BD865CE5}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
