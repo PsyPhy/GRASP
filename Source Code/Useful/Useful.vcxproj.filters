@@ -24,6 +24,9 @@
     <ClCompile Include="ParseCommaDelimitedLine.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Timers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fMessageBox.h">
@@ -36,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ParseCommaDelimitedLine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Timers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

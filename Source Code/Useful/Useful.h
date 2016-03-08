@@ -26,3 +26,12 @@ typedef double Matrix3x3[3][3];
 #define Pi	M_PI
 
 #define UNDEFINED		-1
+
+// Some useful constants.
+
+#define NORMAL_EXIT 0
+#define ESCAPE_EXIT 1
+#define IGNORE_EXIT 2
+#define ERROR_EXIT 3
+#define ABORT_EXIT 4
+#define RETRY_EXIT 5
