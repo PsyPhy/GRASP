@@ -24,6 +24,14 @@
 #include <memory.h>
 #include <math.h>
 #include <windows.h> // For the OutputDebugString routine.
+#include <MMSystem.h>
+#include <WinUser.h>
+
+
+#include "../Useful/Useful.h"
+#include "../Useful/fMessageBox.h"
+#include "../Useful/Timers.h"
+#include "../VectorsMixin/VectorsMixin.h"
 
 // RTNet C++ includes
 #define NO64BIT

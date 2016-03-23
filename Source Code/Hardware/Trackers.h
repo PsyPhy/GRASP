@@ -1,19 +1,14 @@
 /*********************************************************************************/
 /*                                                                               */
-/*                                  DexTracker.h                                 */
+/*                                   Trackers.h                                  */
 /*                                                                               */
 /*********************************************************************************/
 
 /*
- * Interface to the DEX hardware.
+ * Interface to hardware that can track movement, such as the CODA and Polhemus.
  */
 
 #pragma once
-
-#include "../Useful/Useful.h"
-#include "../Useful/Timers.h"
-#include "../VectorsMixin/VectorsMixin.h"
-
 
 /********************************************************************************/
 
@@ -27,71 +22,88 @@
 
 
 typedef struct {
-
 	Vector3	position;
 	bool	visibility;
-
-} CodaMarker;
+} TrackerMarker;
 
 typedef struct {
-
-	CodaMarker	marker[N_MARKERS];
+	TrackerMarker	marker[N_MARKERS];
 	double		time;
-
-} CodaFrame;
+} TrackerMarkerFrame;
 
 typedef struct {
-
 	Vector3		position;
 	Quaternion	orientation;
 	bool		visibility;
 	double		time;
+} TrackerPose;
 
-} ManipulandumState;
-class DexTracker : public VectorsMixin {
+// A generic device that can track movement over time at a fixed sampling rate.
+class Tracker {
 
-	private:
+	public:
 
-	protected:
+		double samplePeriod;
+
+		Tracker () : samplePeriod( 0.005 ) {};
+
+		virtual void	Initialize( void );
+		virtual void	Quit( void );
+
+		virtual double	GetSamplePeriod( void );
+
+		virtual void	StartAcquisition( float max_duration );
+		virtual void	StopAcquisition( void );
+		virtual bool	GetAcquisitionState( void );
+		virtual bool	CheckAcquisitionOverrun( void );
+
+		virtual int		Update( void ); // This gets called to update the current state for realtime applications.
+
+};
+
+//
+// A tracker that measures the 3D position of markers.
+//
+class PointTracker : public Tracker, public VectorsMixin {
+
+	public:
+		int nMarkers;
+		PointTracker() : nMarkers( N_MARKERS ) {} ;
+		virtual bool	GetCurrentMarkerFrame( TrackerMarkerFrame &frame );
+		virtual int		RetrieveMarkerFrames( TrackerMarkerFrame frames[], int max_frames );
+
+};
+
+//
+// A tracker based on the CODA model, with multiple sensing units, alignment, etc.
+//
+class CodaTracker : public PointTracker {
 
 	public:
 
 		int nCodas;
 		// Number of markers to be acquired.
-		int nMarkers;
 		int nAcqFrames;
 
-		double samplePeriod;
+		CodaTracker() : nCodas( N_CODAS ) {} ;
 
-		DexTracker() : nCodas( N_CODAS ), nMarkers( N_MARKERS ), samplePeriod( 0.005 ) {} ;
+		virtual int		RetrieveMarkerFrames( TrackerMarkerFrame frames[], int max_frames, int unit = 0 );
+		virtual bool	GetCurrentMarkerFrameUnit( TrackerMarkerFrame &frame, int unit );
+		virtual bool	GetCurrentMarkerFrameIntrinsic( TrackerMarkerFrame &frame, int unit );
 
-		virtual void Initialize( void );
-		virtual int  Update( void );
-		virtual void Quit( void );
-
-		virtual void	StartAcquisition( float max_duration );
-		virtual void	StopAcquisition( void );
-		virtual bool	CheckAcquisitionOverrun( void );
-
-		virtual int		RetrieveMarkerFrames( CodaFrame frames[], int max_frames, int unit = 0 );
-		virtual bool	GetCurrentMarkerFrame( CodaFrame &frame );
-		virtual bool	GetCurrentMarkerFrameUnit( CodaFrame &frame, int unit );
-		virtual bool	GetCurrentMarkerFrameIntrinsic( CodaFrame &frame, int unit );
-
-		virtual double	GetSamplePeriod( void );
 		virtual int		GetNumberOfCodas( void );
-		virtual bool	GetAcquisitionState( void );
 		virtual void	GetUnitPlacement( int unit, Vector3 &pos, Quaternion &ori ) ;
 		virtual void	GetUnitTransform( int unit, Vector3 &offset, Matrix3x3 &rotation ) ;
 		virtual int		PerformAlignment(  int origin, int x_negative, int x_positive, int xy_negative, int xy_positive ) ;
 
-		void			CopyMarkerFrame( CodaFrame &destination, CodaFrame &source );
+		void			CopyMarkerFrame( TrackerMarkerFrame &destination, TrackerMarkerFrame &source );
 
 };
 
-/********************************************************************************/
-
-class DexMouseTracker : public DexTracker {
+//
+// Simulate the CODA using the mouse.
+//
+class MouseCodaTracker : public CodaTracker {
 
 private:
 
@@ -105,14 +117,14 @@ private:
 
 	FILE		*fp;
 
-	CodaFrame	polledMarkerFrames[DEX_MAX_MARKER_FRAMES];
+	TrackerMarkerFrame	polledMarkerFrames[DEX_MAX_MARKER_FRAMES];
 
 	
 protected:
 
 public:
 
-	DexMouseTracker( HWND dlg = NULL ) : acquisitionOn(false), overrun(false) {
+	MouseCodaTracker( HWND dlg = NULL ) : acquisitionOn(false), overrun(false) {
 		this->dlg = dlg;
 	}
 
@@ -125,9 +137,9 @@ public:
 	bool GetAcquisitionState( void );
 	bool CheckOverrun( void );
 
-	int	 RetrieveMarkerFrames( CodaFrame frames[], int max_frames, int unit );
-	bool GetCurrentMarkerFrame( CodaFrame &frame );
-	bool GetCurrentMarkerFrameUnit( CodaFrame &frame, int unit );
+	int	 RetrieveMarkerFrames( TrackerMarkerFrame frames[], int max_frames, int unit );
+	bool GetCurrentMarkerFrame( TrackerMarkerFrame &frame );
+	bool GetCurrentMarkerFrameUnit( TrackerMarkerFrame &frame, int unit );
 
 	void GetUnitTransform( int unit, Vector3 &offset, Matrix3x3 &rotation );
 	int  PerformAlignment( int origin, int x_negative, int x_positive, int xy_negative, int xy_positive );
@@ -135,10 +147,14 @@ public:
 };
 
 
+// 
+// The real CODA tracker based on the CodaRTNet SDK.
+//
+
 // Use main Codamotion RTNet namespace
 using namespace codaRTNet;
 
-class DexRTnetTracker : public DexTracker {
+class CodaRTnetTracker : public CodaTracker {
 
 private:
 
@@ -190,13 +206,13 @@ private:
 	DataStream		stream;
 	CODANET_HWCONFIG_DEVICEENABLE devices;
 
-	CodaFrame		recordedMarkerFrames[DEX_MAX_CODAS][DEX_MAX_MARKER_FRAMES];
+	TrackerMarkerFrame		recordedMarkerFrames[DEX_MAX_CODAS][DEX_MAX_MARKER_FRAMES];
 
 protected:
 
 public:
 
-	DexRTnetTracker( void ) : 
+	CodaRTnetTracker( void ) : 
 		// Host address and UDP port for the Coda RTnet server.
 		serverAddress("192.168.1.1"), 
 		serverPort(10111), 
@@ -223,8 +239,8 @@ public:
 	bool GetAcquisitionState( void );
 	int  GetNumberOfCodas( void );
 
-	int		RetrieveMarkerFrames( CodaFrame frames[], int max_frames, int unit );
-	bool	GetCurrentMarkerFrame( CodaFrame &frame );
+	int		RetrieveMarkerFrames( TrackerMarkerFrame frames[], int max_frames, int unit );
+	bool	GetCurrentMarkerFrame( TrackerMarkerFrame &frame );
 
 	// Need to add the following.
 	void GetUnitTransform( int unit, Vector3 &offset, Matrix3x3 &rotation );

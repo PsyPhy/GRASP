@@ -11,44 +11,48 @@
 
 /***************************************************************************/
 
-void DexTracker::Initialize( void ) {}
-int DexTracker::Update( void ) {
+void Tracker::Initialize( void ) {}
+double Tracker::GetSamplePeriod( void ) {
+	return( samplePeriod );
+}
+int  Tracker::Update( void ) {
 	return( 0 );
 }
-void DexTracker::Quit() {}
+void Tracker::Quit() {}
 
-void DexTracker::StartAcquisition( float max_duration ) {}
-void DexTracker::StopAcquisition( void ) {}
-int  DexTracker::RetrieveMarkerFrames( CodaFrame frames[], int max_frames, int unit ) { 
-	return( 0 );
-}
-bool  DexTracker::GetCurrentMarkerFrame( CodaFrame &frame ) { 
+void Tracker::StartAcquisition( float max_duration ) {}
+void Tracker::StopAcquisition( void ) {}
+bool Tracker::GetAcquisitionState( void ) {
 	return( false );
 }
-bool  DexTracker::GetCurrentMarkerFrameUnit( CodaFrame &frame, int unit ) { 
+bool Tracker::CheckAcquisitionOverrun( void ) {
+	return( false );
+}
+
+/***************************************************************************/
+
+bool  PointTracker::GetCurrentMarkerFrame( TrackerMarkerFrame &frame ) { 
+	return( false );
+}
+
+/***************************************************************************/
+
+int  CodaTracker::RetrieveMarkerFrames( TrackerMarkerFrame frames[], int max_frames, int unit ) { 
+	return( 0 );
+}
+bool  CodaTracker::GetCurrentMarkerFrameUnit( TrackerMarkerFrame &frame, int unit ) { 
 	// If the tracker has no concept of separate units, just get the data from the default unit.
 	return( GetCurrentMarkerFrame( frame ) );
 }
-double DexTracker::GetSamplePeriod( void ) {
-	return( samplePeriod );
-}
-int DexTracker::GetNumberOfCodas( void ) {
+int CodaTracker::GetNumberOfCodas( void ) {
 	return( 0 );
 }
-bool DexTracker::GetAcquisitionState( void ) {
-	return( false );
-}
-bool DexTracker::CheckAcquisitionOverrun( void ) {
-	return( false );
+
+void CodaTracker::GetUnitTransform( int unit, Vector3 &offset, Matrix3x3 &rotation ) {
+	fMessageBox( MB_OK, "DexTracker", "GetUnitTransform() undefined." );
 }
 
-/**************************************************************************************/
-
-void DexTracker::GetUnitTransform( int unit, Vector3 &offset, Matrix3x3 &rotation ) {
-	MessageBox( NULL, "GetUnitTransform() undefined.", "DexTracker", MB_OK );
-}
-
-void DexTracker::GetUnitPlacement( int unit, Vector3 &pos, Quaternion &ori ) {
+void CodaTracker::GetUnitPlacement( int unit, Vector3 &pos, Quaternion &ori ) {
 
 	Vector3		offset;
 	Matrix3x3	rotation;
@@ -72,13 +76,13 @@ void DexTracker::GetUnitPlacement( int unit, Vector3 &pos, Quaternion &ori ) {
 
 /**************************************************************************************/
 
-int DexTracker::PerformAlignment( int origin, int x_negative, int x_positive, int xy_negative, int xy_positive ) {
+int CodaTracker::PerformAlignment( int origin, int x_negative, int x_positive, int xy_negative, int xy_positive ) {
 	return( NORMAL_EXIT );
 }
 
 /**************************************************************************************/
 
-void DexTracker::CopyMarkerFrame( CodaFrame &destination, CodaFrame &source ) {
+void CodaTracker::CopyMarkerFrame( TrackerMarkerFrame &destination, TrackerMarkerFrame &source ) {
 	int mrk;
 	destination.time = source.time;
 	for ( mrk = 0; mrk < nMarkers; mrk++ ) {
@@ -92,9 +96,9 @@ void DexTracker::CopyMarkerFrame( CodaFrame &destination, CodaFrame &source ) {
 // Get the latest frame of marker data from the specified unit.
 // Marker positions are expressed in the intrinsic reference frame of the unit.
 
-bool DexTracker::GetCurrentMarkerFrameIntrinsic( CodaFrame &iframe, int unit ) {
+bool CodaTracker::GetCurrentMarkerFrameIntrinsic( TrackerMarkerFrame &iframe, int unit ) {
 
-	CodaFrame	frame;
+	TrackerMarkerFrame	frame;
 	int			status;
 
 	Vector3		offset;
