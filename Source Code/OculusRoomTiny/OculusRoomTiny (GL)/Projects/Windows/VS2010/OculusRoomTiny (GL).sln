@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual C++ Express 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OculusRoomTiny (GL)", "OculusRoomTiny (GL).vcxproj", "{396D645E-3224-433C-AFBA-6EF6919A2214}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibOVR", "..\..\..\..\..\..\LibOVR\Projects\Windows\VS2010\LibOVR.vcxproj", "{EA50E705-5113-49E5-B105-2512EDC8DDC6}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibOVRKernel", "..\..\..\..\..\..\LibOVRKernel\Projects\Windows\VS2010\LibOVRKernel.vcxproj", "{29FA0962-DDC6-4F72-9D12-E150DF29E279}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		DebugStatic|Win32 = DebugStatic|Win32
+		Release|Win32 = Release|Win32
+		ReleaseStatic|Win32 = ReleaseStatic|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{396D645E-3224-433C-AFBA-6EF6919A2214}.Debug|Win32.ActiveCfg = Debug|Win32
+		{396D645E-3224-433C-AFBA-6EF6919A2214}.Debug|Win32.Build.0 = Debug|Win32
+		{396D645E-3224-433C-AFBA-6EF6919A2214}.DebugStatic|Win32.ActiveCfg = Debug|Win32
+		{396D645E-3224-433C-AFBA-6EF6919A2214}.DebugStatic|Win32.Build.0 = Debug|Win32
+		{396D645E-3224-433C-AFBA-6EF6919A2214}.Release|Win32.ActiveCfg = Release|Win32
+		{396D645E-3224-433C-AFBA-6EF6919A2214}.Release|Win32.Build.0 = Release|Win32
+		{396D645E-3224-433C-AFBA-6EF6919A2214}.ReleaseStatic|Win32.ActiveCfg = Release|Win32
+		{396D645E-3224-433C-AFBA-6EF6919A2214}.ReleaseStatic|Win32.Build.0 = Release|Win32
+		{EA50E705-5113-49E5-B105-2512EDC8DDC6}.Debug|Win32.ActiveCfg = Debug|Win32
+		{EA50E705-5113-49E5-B105-2512EDC8DDC6}.Debug|Win32.Build.0 = Debug|Win32
+		{EA50E705-5113-49E5-B105-2512EDC8DDC6}.DebugStatic|Win32.ActiveCfg = Debug|Win32
+		{EA50E705-5113-49E5-B105-2512EDC8DDC6}.DebugStatic|Win32.Build.0 = Debug|Win32
+		{EA50E705-5113-49E5-B105-2512EDC8DDC6}.Release|Win32.ActiveCfg = Release|Win32
+		{EA50E705-5113-49E5-B105-2512EDC8DDC6}.Release|Win32.Build.0 = Release|Win32
+		{EA50E705-5113-49E5-B105-2512EDC8DDC6}.ReleaseStatic|Win32.ActiveCfg = Release|Win32
+		{EA50E705-5113-49E5-B105-2512EDC8DDC6}.ReleaseStatic|Win32.Build.0 = Release|Win32
+		{29FA0962-DDC6-4F72-9D12-E150DF29E279}.Debug|Win32.ActiveCfg = Debug|Win32
+		{29FA0962-DDC6-4F72-9D12-E150DF29E279}.Debug|Win32.Build.0 = Debug|Win32
+		{29FA0962-DDC6-4F72-9D12-E150DF29E279}.DebugStatic|Win32.ActiveCfg = DebugStatic|Win32
+		{29FA0962-DDC6-4F72-9D12-E150DF29E279}.DebugStatic|Win32.Build.0 = DebugStatic|Win32
+		{29FA0962-DDC6-4F72-9D12-E150DF29E279}.Release|Win32.ActiveCfg = Release|Win32
+		{29FA0962-DDC6-4F72-9D12-E150DF29E279}.Release|Win32.Build.0 = Release|Win32
+		{29FA0962-DDC6-4F72-9D12-E150DF29E279}.ReleaseStatic|Win32.ActiveCfg = ReleaseStatic|Win32
+		{29FA0962-DDC6-4F72-9D12-E150DF29E279}.ReleaseStatic|Win32.Build.0 = ReleaseStatic|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
