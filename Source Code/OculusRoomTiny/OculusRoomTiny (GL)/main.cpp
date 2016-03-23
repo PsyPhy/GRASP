@@ -22,14 +22,17 @@ limitations under the License.
 /// This sample has not yet been fully assimiliated into the framework
 /// and also the GL support is not quite fully there yet, hence the VR
 /// is not that great!
-
-#include "../../OculusRoomTiny_Advanced/Common/Win32_GLAppUtil.h"
-#include "Kernel/OVR_System.h"
+#include "../../LibOVRKernel/Src/Kernel/OVR_System.h"
 
 // Include the Oculus SDK
-#include "OVR_CAPI_GL.h"
+#include "../../LibOVR/Include/OVR_CAPI_GL.h"
+#include "../../LibOVRKernel/Src/GL/CAPI_GLE_GL.h"
+#include "../../LibOVRKernel/Src/GL/CAPI_GLE.h"
 
 using namespace OVR;
+
+#include "Win32_GLAppUtil.h"
+
 
 // return true to retry later (e.g. after display lost)
 static bool MainLoop(bool retryCreate)

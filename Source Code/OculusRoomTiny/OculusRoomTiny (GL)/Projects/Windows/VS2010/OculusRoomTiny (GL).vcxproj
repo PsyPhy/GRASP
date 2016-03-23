@@ -22,15 +22,21 @@
     <ClCompile Include="..\..\..\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\OculusRoomTiny_Advanced\Common\Win32_GLAppUtil.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\..\..\..\..\LibOVRKernel\Projects\Windows\VS2010\LibOVRKernel.vcxproj">
       <Project>{29fa0962-ddc6-4f72-9d12-e150df29e279}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\..\..\LibOVR\Projects\Windows\VS2010\LibOVR.vcxproj">
       <Project>{ea50e705-5113-49e5-b105-2512edc8ddc6}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\LibOVRKernel\Projects\Windows\VS2010\LibOVRKernel.vcxproj">
+      <Project>{29fa0962-ddc6-4f72-9d12-e150df29e279}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\LibOVR\Projects\Windows\VS2010\LibOVR.vcxproj">
+      <Project>{ea50e705-5113-49e5-b105-2512edc8ddc6}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\Win32_GLAppUtil.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{396D645E-3224-433C-AFBA-6EF6919A2214}</ProjectGuid>
