@@ -35,15 +35,15 @@
 
 // RTNet C++ includes
 #define NO64BIT
-#include "../../../CodaRTnetSDK/include/codaRTNetProtocolCPP/RTNetClient.h"
-#include "../../../CodaRTnetSDK/include/codaRTNetProtocol/codartprotocol_gs16aio.h"
-#include "../../../CodaRTnetSDK/include/codaRTNetProtocolCPP/DeviceOptionsAlignment.h"
-#include "../../../CodaRTnetSDK/include/codaRTNetProtocolCPP/DeviceOptionsCodaMode.h"
-#include "../../../CodaRTnetSDK/include/codaRTNetProtocolCPP/DeviceOptionsCodaPacketMode.h"
-#include "../../../CodaRTnetSDK/include/codaRTNetProtocolCPP/DeviceOptionsGS16AIOInputs.h"
-#include "../../../CodaRTnetSDK/include/codaRTNetProtocolCPP/DeviceInfoUnitCoordSystem.h"
-#include "../../../CodaRTnetSDK/include/codaRTNetProtocolCPP/DeviceInfoAlignment.h"
-#include "../../../CodaRTnetSDK/include/codaRTNetProtocolCPP/PacketDecode3DResult.h"
-#include "../../../CodaRTnetSDK/include/codaRTNetProtocolCPP/PacketDecode3DResultExt.h"
-#include "../../../CodaRTnetSDK/include/codaRTNetProtocolCPP/PacketDecodeADC16.h"
+#include "../Include/codaRTNetProtocolCPP/RTNetClient.h"
+#include "../Include/codaRTNetProtocol/codartprotocol_gs16aio.h"
+#include "../Include/codaRTNetProtocolCPP/DeviceOptionsAlignment.h"
+#include "../Include/codaRTNetProtocolCPP/DeviceOptionsCodaMode.h"
+#include "../Include/codaRTNetProtocolCPP/DeviceOptionsCodaPacketMode.h"
+#include "../Include/codaRTNetProtocolCPP/DeviceOptionsGS16AIOInputs.h"
+#include "../Include/codaRTNetProtocolCPP/DeviceInfoUnitCoordSystem.h"
+#include "../Include/codaRTNetProtocolCPP/DeviceInfoAlignment.h"
+#include "../Include/codaRTNetProtocolCPP/PacketDecode3DResult.h"
+#include "../Include/codaRTNetProtocolCPP/PacketDecode3DResultExt.h"
+#include "../Include/codaRTNetProtocolCPP/PacketDecodeADC16.h"
 
