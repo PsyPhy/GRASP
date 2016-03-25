@@ -128,7 +128,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
       <OmitDefaultLibName>true</OmitDefaultLibName>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);../../../Include</AdditionalIncludeDirectories>
       <ShowIncludes>false</ShowIncludes>
       <AdditionalOptions>/FC %(AdditionalOptions)</AdditionalOptions>
