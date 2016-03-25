@@ -353,8 +353,8 @@ struct OGL
         int   pf = 0;
         UINT  numFormats = 0;
 // Instead of calling wglChoosePixelFormatARB() using VALIDATE and the pointer, I am just calling it directly. JMc.
-        VALIDATE(wglChoosePixelFormatARBFunc(hDC, iAttributes, fAttributes, 1, &pf, &numFormats), "wglChoosePixelFormatARBFunc failed.");
-//		wglChoosePixelFormatARB(hDC, iAttributes, fAttributes, 1, &pf, &numFormats);
+//        VALIDATE(wglChoosePixelFormatARBFunc(hDC, iAttributes, fAttributes, 1, &pf, &numFormats), "wglChoosePixelFormatARBFunc failed.");
+		wglChoosePixelFormatARB(hDC, iAttributes, fAttributes, 1, &pf, &numFormats);
 
         PIXELFORMATDESCRIPTOR pfd;
         memset(&pfd, 0, sizeof(pfd));
